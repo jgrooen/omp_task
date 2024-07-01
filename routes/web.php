@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/payments/create', [PaymentsController::class, 'create']);
+
+Route::post('/payments/webhook/{paymentChannelName}', [PaymentsController::class, 'handleWebhook']);

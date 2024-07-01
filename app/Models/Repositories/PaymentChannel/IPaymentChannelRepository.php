@@ -9,7 +9,7 @@ interface IPaymentChannelRepository
 {
     public function getOneById(int $id): null|PaymentChannel;
 
-    public function getAll(?int $offset = 0, ?int $count = 0, int &$total = null): Collection;
+    public function getAllActive(): Collection;
 
     public function create(PaymentChannel $paymentChannel): PaymentChannel;
 

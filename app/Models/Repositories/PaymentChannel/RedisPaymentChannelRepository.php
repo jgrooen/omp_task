@@ -17,16 +17,11 @@ class RedisPaymentChannelRepository extends RedisRepository
         parent::__construct();
     }
 
-    public function getAll(?int $offset = 0, ?int $count = 0, int &$total = null): Collection
+    public function getAllActive(): Collection
     {
         /** @var Collection $entities */
         $entities = $this->get();
 
-        if ($count) {
-            $entities = $entities->splice($offset, $count);
-        }
-
-        $total = $entities->count();
         return $entities;
     }
 

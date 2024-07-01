@@ -16,26 +16,31 @@ class PaymentChannelRepository implements IPaymentChannelRepository
         $this->redisRepository = new RedisPaymentChannelRepository();
     }
 
-    public function getAll(?int $offset = 0, ?int $count = 0, int &$total = null): Collection
+    public function getAllActive(): Collection
     {
         if (!$this->redisRepository->has()) {
-            $entities = $this->mysqlRepository->getAll($offset, $count, $total);
+            $entities = $this->mysqlRepository->getAllActive();
             $this->redisRepository->put($entities);
 
             return $entities;
         } else {
-            return $this->redisRepository->getAll($offset, $count, $total);
+            return $this->redisRepository->getAllActive();
         }
     }
 
     public function getOneById(int $id): null|PaymentChannel
     {
         if (!$this->redisRepository->has()) {
-            $entities = $this->mysqlRepository->getAll();
+            $entities = $this->mysqlRepository->getAllActive();
             $this->redisRepository->put($entities);
         }
 
         return $this->redisRepository->getOneById($id);
+    }
+
+    public function getOneByNameEn(string $nameEn): null|PaymentChannel
+    {
+        return $this->mysqlRepository->getOneByNameEn($nameEn);
     }
 
     public function create(PaymentChannel $paymentChannel): PaymentChannel

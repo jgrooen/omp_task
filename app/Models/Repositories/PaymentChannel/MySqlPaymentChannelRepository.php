@@ -28,9 +28,19 @@ class MySqlPaymentChannelRepository extends MySqlRepository implements IPaymentC
         return $paymentChannel ? $this->factory->makeEntityFromStdClass($paymentChannel) : null;
     }
 
-    public function getAll(?int $offset = 0, ?int $count = 0, int &$total = null): Collection
+    public function getOneByNameEn(string $nameEn): null|PaymentChannel
     {
         $paymentChannel = $this->newQuery()
+            ->where('name_en', $nameEn)
+            ->first();
+
+        return $paymentChannel ? $this->factory->makeEntityFromStdClass($paymentChannel) : null;
+    }
+
+    public function getAllActive(): Collection
+    {
+        $paymentChannel = $this->newQuery()
+            ->where('is_active', true)
             ->whereNull('deleted_at')
             ->get();
 
