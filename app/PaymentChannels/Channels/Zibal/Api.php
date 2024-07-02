@@ -1,6 +1,6 @@
 <?php
 
-namespace App\PaymentChannels\Zibal;
+namespace App\PaymentChannels\Channels\Zibal;
 
 Class Api
 {

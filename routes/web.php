@@ -18,6 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/payments/create', [PaymentsController::class, 'create']);
+Route::post('/payments/create', [PaymentsController::class, 'createCharge']);
 
 Route::post('/payments/webhook/{paymentChannelName}', [PaymentsController::class, 'handleWebhook']);

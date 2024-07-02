@@ -28,7 +28,7 @@ class PaymentChannelManager implements IPaymentChannel
     /**
      * @throws Exception
      */
-    public function createCharge(Payment $payment)
+    public function createPayment(Payment $payment)
     {
         /** @var PaymentChannel $_paymentChannel */
         foreach ($this->sortedPaymentChannels as $_paymentChannel) {
@@ -36,7 +36,7 @@ class PaymentChannelManager implements IPaymentChannel
                 $className = "App\\PaymentChannels\\Channels\\" . ucfirst($_paymentChannel->getClassName()) . "\\Channel";
                 $channel = new $className();
 
-                return $channel->createCharge($payment);
+                return $channel->createPayment($payment);
             } catch (Exception $e) {
                 Log::error('Payment creation charge failed: ' . $e->getMessage());
             }
@@ -48,7 +48,7 @@ class PaymentChannelManager implements IPaymentChannel
     /**
      * @throws Exception
      */
-    public function handleWebhook(array $data)
+    public function verify(array $data)
     {
         /** @var PaymentChannel $selectedPaymentChannel */
         $selectedPaymentChannel = $this->sortedPaymentChannels[0];
@@ -56,7 +56,7 @@ class PaymentChannelManager implements IPaymentChannel
         if (class_exists($className)) {
             $channel = new $className();
 
-            return $channel->handleWebhook($data);
+            return $channel->verify($data);
         }
 
         throw new Exception("Invalid channel name.");

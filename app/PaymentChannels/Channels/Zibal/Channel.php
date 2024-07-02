@@ -1,6 +1,6 @@
 <?php
 
-namespace App\PaymentChannels\Zibal;
+namespace App\PaymentChannels\Channels\Zibal;
 
 use App\Models\Entities\Payment;
 use App\Models\Entities\PaymentChannel;
@@ -17,12 +17,12 @@ class Channel implements IPaymentChannel
         $this->api = new Api();
     }
 
-    public function createCharge(Payment $payment)
+    public function createPayment(Payment $payment)
     {
         // TODO: Implement createCharge() method.
     }
 
-    public function handleWebhook(array $data)
+    public function verify(array $data)
     {
         // TODO: Implement handleWebhook() method.
     }

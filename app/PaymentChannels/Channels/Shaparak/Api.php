@@ -1,6 +1,6 @@
 <?php
 
-namespace App\PaymentChannels\Shaparak;
+namespace App\PaymentChannels\Channels\Shaparak;
 
 class Api
 {

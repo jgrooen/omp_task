@@ -1,6 +1,6 @@
 <?php
 
-namespace App\PaymentChannels\Jibit;
+namespace App\PaymentChannels\Channels\Jibit;
 
 class Api
 {

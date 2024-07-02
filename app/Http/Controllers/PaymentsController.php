@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entities\Payment;
-use App\Models\Entities\PaymentChannel;
 use App\Models\Repositories\PaymentChannel\PaymentChannelRepository;
 use App\PaymentChannels\PaymentChannelManager;
 use Illuminate\Http\JsonResponse;
@@ -12,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class PaymentsController extends Controller
 {
-    public function create(Request $request): JsonResponse
+    public function createCharge(Request $request): JsonResponse
     {
         $request->validate([
             'amount' => 'required|numeric',
@@ -31,7 +30,7 @@ class PaymentsController extends Controller
         $paymentChannelManager = new PaymentChannelManager($selectedPaymentChannel);
 
         try {
-            $result = $paymentChannelManager->createCharge($payment);
+            $result = $paymentChannelManager->createPayment($payment);
 
             return response()->json(['success' => true, 'data' => $result], 200);
         } catch (\Exception $e) {
@@ -47,7 +46,7 @@ class PaymentsController extends Controller
         $paymentChannelManager = new PaymentChannelManager($selectedPaymentChannel);
 
         try {
-            $paymentChannelManager->handleWebhook($request->all());
+            $paymentChannelManager->verify($request->all());
 
             return response()->json(['success' => true], 200);
         } catch (\Exception $e) {

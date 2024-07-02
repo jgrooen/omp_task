@@ -9,7 +9,7 @@ interface IPaymentChannel
 {
     public function __construct(PaymentChannel $paymentChannel);
 
-    public function createCharge(Payment $payment);
+    public function createPayment(Payment $payment);
 
-    public function handleWebhook(array $data);
+    public function verify(array $data);
 }
